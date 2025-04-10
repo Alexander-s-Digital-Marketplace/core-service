@@ -1,84 +1,88 @@
 package api
 
 import (
-	changepassword "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/change_password"
-	getallroles "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_all_roles"
-	"github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/login"
-	refreshtoken "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/refreshToken"
-	"github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/registration"
-	resetpassword "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/reset_password"
-	validaccesstoken "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/valid_access_token"
-	verefyresetcode "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/verefy_reset_code"
+	createproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/create_product"
+	getallfeed "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_all_feed"
+	getcart "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_cart"
+	gethistory "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_history"
+	getmyproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_my_product"
+	getmyprofile "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_my_profile"
+	getprofilebyid "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_profile_by_id"
+	switchproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/switch_product"
+	switchproductcart "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/switch_product_cart"
+	updateprofile "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/update_profile"
 	"github.com/gin-gonic/gin"
 )
 
 type DefaultAPI struct {
 }
 
-// Post /register
-// New user's registration
-func (api *DefaultAPI) Register(c *gin.Context) {
+func (api *DefaultAPI) GetAllFeedGet(c *gin.Context) {
 
-	code, message := registration.RegistrationHandle(c)
+	code, allFeed := getallfeed.GetAllFeed(c)
 
-	c.JSON(code, gin.H{"message": message})
+	c.JSON(code, allFeed)
 }
 
-// Post /login
-// User's login
-func (api *DefaultAPI) Login(c *gin.Context) {
+func (api *DefaultAPI) GetCartGet(c *gin.Context) {
 
-	code, accessToken, refreshToken, message := login.LoginHandle(c)
+	code, cart := getcart.GetCart(c)
 
-	c.JSON(code, gin.H{"accessToken": accessToken, "refreshToken": refreshToken, "message": message})
-
+	c.JSON(code, cart)
 }
 
-// Post /refresh-token
-// Refresh access token
-func (api *DefaultAPI) RefreshToken(c *gin.Context) {
+func (api *DefaultAPI) GetHistoryGet(c *gin.Context) {
 
-	code, accessToken, refreshToken, message := refreshtoken.RefreshTokenHandle(c)
-	c.JSON(code, gin.H{"accessToken": accessToken, "refreshToken": refreshToken, "message": message})
+	code, history := gethistory.GetHistory(c)
+
+	c.JSON(code, history)
 }
 
-// Post /change-password
-// Change user's password
-func (api *DefaultAPI) ChangePassword(c *gin.Context) {
+func (api *DefaultAPI) GetMyProductGet(c *gin.Context) {
 
-	code, accessToken, refreshToken, message := changepassword.ChangePasswordHandle(c)
+	code, myProduct := getmyproduct.GetMyProduct(c)
 
-	c.JSON(code, gin.H{"accessToken": accessToken, "refreshToken": refreshToken, "message": message})
+	c.JSON(code, myProduct)
 }
 
-// Post /reset-password
-// Reset user's password
-func (api *DefaultAPI) ResetPassword(c *gin.Context) {
+func (api *DefaultAPI) GetMyProfileGet(c *gin.Context) {
 
-	code, message := resetpassword.ResetPasswordHandle(c)
+	code, myProfile := getmyprofile.GetMyProfile(c)
 
-	c.JSON(code, gin.H{"message": message})
+	c.JSON(code, myProfile)
 }
 
-// Post /verefy-reset-code
-// Verefy code for reset user's password
-func (api *DefaultAPI) VerefyRecetCode(c *gin.Context) {
+func (api *DefaultAPI) GetProfileByIdGet(c *gin.Context) {
 
-	code, accessToken, refreshToken, message := verefyresetcode.VerefyResetCodeHandle(c)
+	code, profileById := getprofilebyid.GetProfileById(c)
 
-	c.JSON(code, gin.H{"accessToken": accessToken, "refreshToken": refreshToken, "message": message})
+	c.JSON(code, profileById)
 }
 
-func (api *DefaultAPI) GetAllRoles(c *gin.Context) {
+func (api *DefaultAPI) CreateProductPost(c *gin.Context) {
 
-	code, roles := getallroles.GetAllRoles(c)
+	code, message := createproduct.CreateProduct(c)
 
-	c.JSON(code, roles)
+	c.JSON(code, message)
 }
 
-func (api *DefaultAPI) ValidAccessToken(c *gin.Context) {
+func (api *DefaultAPI) SwitchProductPost(c *gin.Context) {
 
-	code, claim := validaccesstoken.ValidAccessToken(c)
+	code, message := switchproduct.SwitchProduct(c)
 
-	c.JSON(code, claim)
+	c.JSON(code, message)
+}
+
+func (api *DefaultAPI) SwitchProductCartPost(c *gin.Context) {
+
+	code, message := switchproductcart.SwitchProductCart(c)
+
+	c.JSON(code, message)
+}
+
+func (api *DefaultAPI) UpdateProfilePost(c *gin.Context) {
+
+	code, message := updateprofile.UpdateProfile(c)
+
+	c.JSON(code, message)
 }
