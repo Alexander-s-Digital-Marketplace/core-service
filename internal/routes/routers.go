@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	api "github.com/Alexander-s-Digital-Marketplace/core-service/internal/api"
+	authmiddlewares "github.com/Alexander-s-Digital-Marketplace/core-service/internal/middlewares/auth_middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,7 +30,7 @@ func NewRouter(handleFunctions ApiHandleFunctions) *gin.Engine {
 // NewRouter add routes to existing gin engine.
 func NewRouterWithGinEngine(router *gin.Engine, handleFunctions ApiHandleFunctions) *gin.Engine {
 	protected := router.Group("/")
-	//protected.Use(authmiddlewares.AuthMiddleware())
+	protected.Use(authmiddlewares.AuthMiddleware())
 	for _, route := range getRoutes(handleFunctions) {
 		if route.HandlerFunc == nil {
 			route.HandlerFunc = DefaultHandleFunc
