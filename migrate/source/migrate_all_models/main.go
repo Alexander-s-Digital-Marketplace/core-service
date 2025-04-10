@@ -1,44 +1,33 @@
 package main
 
 import (
-	"log"
-
-	"github.com/KusakinDev/Catering-Auth-Service/internal/database"
-	accountmodel "github.com/KusakinDev/Catering-Auth-Service/internal/models/account_model"
-	resetpasswordmodel "github.com/KusakinDev/Catering-Auth-Service/internal/models/reset_password_model"
-	rolemodel "github.com/KusakinDev/Catering-Auth-Service/internal/models/role_model"
+	loggerconfig "github.com/Alexander-s-Digital-Marketplace/core-service/internal/config/logger"
+	"github.com/Alexander-s-Digital-Marketplace/core-service/internal/database"
+	cartmodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/cart_model"
+	historymodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/history_model"
+	productmodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/product_model"
+	profilemodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/profile_model"
 )
 
 func main() {
+	loggerconfig.Init()
 
 	var db database.DataBase
 	db.InitDB()
+	defer db.CloseDB()
 
-	var account accountmodel.UserAccount
-	account.MigrateToDB(db)
+	var profile profilemodel.Profile
+	profile.MigrateToDB(db)
+	profile.Seeding(5)
 
-	var role rolemodel.Role
-	role.MigrateToDB(db)
+	var product productmodel.Product
+	product.MigrateToDB(db)
+	product.Seeding(10, 5)
 
-	var resetCode resetpasswordmodel.ResetCode
-	resetCode.MigrateToDB(db)
+	var cart cartmodel.Cart
+	cart.MigrateToDB(db)
 
-	sqlStatements := []string{
-		`INSERT INTO roles (role, role_string) VALUES
-        ('adm', 'Администратор'),
-        ('mng', 'Менеджер'),
-        ('wtr', 'Официант'),
-        ('ktn', 'Кухня'),
-        ('bar', 'Бар');`,
-	}
+	var history historymodel.History
+	history.MigrateToDB(db)
 
-	for _, stmt := range sqlStatements {
-		if err := db.Connection.Exec(stmt).Error; err != nil {
-			log.Println("Error executing seed: ", stmt, err)
-		}
-	}
-
-	log.Println("Success seeding")
-
-	db.CloseDB()
 }
