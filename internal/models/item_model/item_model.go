@@ -12,8 +12,6 @@ import (
 type Item struct {
 	Id      int    `json:"id" gorm:"primaryKey;autoIncrement"`
 	Content string `json:"content" gorm:"type:varchar(100)"`
-
-	ProductId int `json:"product_id" gorm:"not null"`
 }
 
 // Метод для шифрования Content
