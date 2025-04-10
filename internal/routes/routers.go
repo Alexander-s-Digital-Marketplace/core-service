@@ -3,8 +3,7 @@ package routespkg
 import (
 	"net/http"
 
-	api "github.com/KusakinDev/Catering-Auth-Service/internal/api"
-	authmiddlewares "github.com/KusakinDev/Catering-Auth-Service/internal/middlewares/auth_middlewares"
+	api "github.com/Alexander-s-Digital-Marketplace/core-service/internal/api"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +13,8 @@ type Route struct {
 	Name string
 	// Method is the string for the HTTP method. ex) GET, POST etc..
 	Method string
+	//ex None, Protected
+	Type string
 	// Pattern is the pattern of the URI.
 	Pattern string
 	// HandlerFunc is the handler function of this route.
@@ -28,14 +29,25 @@ func NewRouter(handleFunctions ApiHandleFunctions) *gin.Engine {
 // NewRouter add routes to existing gin engine.
 func NewRouterWithGinEngine(router *gin.Engine, handleFunctions ApiHandleFunctions) *gin.Engine {
 	protected := router.Group("/")
-	protected.Use(authmiddlewares.AuthMiddleware())
+	//protected.Use(authmiddlewares.AuthMiddleware())
 	for _, route := range getRoutes(handleFunctions) {
 		if route.HandlerFunc == nil {
 			route.HandlerFunc = DefaultHandleFunc
 		}
-		switch route.Name {
-		case "GetAllRolesGet":
-			protected.GET(route.Pattern, route.HandlerFunc)
+		switch route.Type {
+		case "Protected":
+			switch route.Method {
+			case http.MethodGet:
+				protected.GET(route.Pattern, route.HandlerFunc)
+			case http.MethodPost:
+				protected.POST(route.Pattern, route.HandlerFunc)
+			case http.MethodPut:
+				protected.PUT(route.Pattern, route.HandlerFunc)
+			case http.MethodPatch:
+				protected.PATCH(route.Pattern, route.HandlerFunc)
+			case http.MethodDelete:
+				protected.DELETE(route.Pattern, route.HandlerFunc)
+			}
 		default:
 			switch route.Method {
 			case http.MethodGet:
@@ -69,52 +81,74 @@ type ApiHandleFunctions struct {
 func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 	return []Route{
 		{
-			"LoginPost",
-			http.MethodPost,
-			"/Login",
-			handleFunctions.DefaultAPI.Login,
-		},
-		{
-			"RefreshTokenPost",
-			http.MethodPost,
-			"/RefreshToken",
-			handleFunctions.DefaultAPI.RefreshToken,
-		},
-		{
-			"RegisterPost",
-			http.MethodPost,
-			"/Register",
-			handleFunctions.DefaultAPI.Register,
-		},
-		{
-			"ChangePasswordPost",
-			http.MethodPost,
-			"/ChangePassword",
-			handleFunctions.DefaultAPI.ChangePassword,
-		},
-		{
-			"ResetPasswordPost",
-			http.MethodPost,
-			"/ResetPassword",
-			handleFunctions.DefaultAPI.ResetPassword,
-		},
-		{
-			"VerefyResetCodePost",
-			http.MethodPost,
-			"/VerefyResetCode",
-			handleFunctions.DefaultAPI.VerefyRecetCode,
-		},
-		{
-			"GetAllRolesGet",
+			"GetAllFeedGet",
 			http.MethodGet,
-			"/GetAllRoles",
-			handleFunctions.DefaultAPI.GetAllRoles,
+			"Protected",
+			"/GetAllFeed",
+			handleFunctions.DefaultAPI.GetAllFeedGet,
 		},
 		{
-			"ValidAccessToken",
+			"GetCartGet",
+			http.MethodGet,
+			"Protected",
+			"/GetCart",
+			handleFunctions.DefaultAPI.GetCartGet,
+		},
+		{
+			"GetHistoryGet",
+			http.MethodGet,
+			"Protected",
+			"/GetHistory",
+			handleFunctions.DefaultAPI.GetHistoryGet,
+		},
+		{
+			"GetMyProductGet",
+			http.MethodGet,
+			"Protected",
+			"/GetMyProduct",
+			handleFunctions.DefaultAPI.GetMyProductGet,
+		},
+		{
+			"GetMyProfileGet",
+			http.MethodGet,
+			"Protected",
+			"/GetMyProfile",
+			handleFunctions.DefaultAPI.GetMyProfileGet,
+		},
+		{
+			"GetProfileByIdGet",
+			http.MethodGet,
+			"Protected",
+			"/GetProfileById",
+			handleFunctions.DefaultAPI.GetProfileByIdGet,
+		},
+		{
+			"CreateProductPost",
 			http.MethodPost,
-			"/ValidAccessToken",
-			handleFunctions.DefaultAPI.GetAllRoles,
+			"Protected",
+			"/CreateProduct",
+			handleFunctions.DefaultAPI.CreateProductPost,
+		},
+		{
+			"SwitchProductPost",
+			http.MethodPost,
+			"Protected",
+			"/SwitchProduct",
+			handleFunctions.DefaultAPI.SwitchProductPost,
+		},
+		{
+			"SwitchProductCartPost",
+			http.MethodPost,
+			"Protected",
+			"/SwitchProductCart",
+			handleFunctions.DefaultAPI.SwitchProductCartPost,
+		},
+		{
+			"UpdateProfilePost",
+			http.MethodPost,
+			"Protected",
+			"/UpdateProfile",
+			handleFunctions.DefaultAPI.UpdateProfilePost,
 		},
 	}
 }
