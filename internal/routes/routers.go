@@ -124,6 +124,13 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			handleFunctions.DefaultAPI.GetProfileByIdGet,
 		},
 		{
+			"DeliverProductGet",
+			http.MethodGet,
+			"Protected",
+			"/DeliverProduct",
+			handleFunctions.DefaultAPI.DeliverProductGet,
+		},
+		{
 			"CreateProductPost",
 			http.MethodPost,
 			"Protected",
