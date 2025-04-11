@@ -2,6 +2,7 @@ package api
 
 import (
 	createproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/create_product"
+	deliverproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/deliver_product"
 	getallfeed "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_all_feed"
 	getcart "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_cart"
 	gethistory "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_history"
@@ -83,6 +84,13 @@ func (api *DefaultAPI) SwitchProductCartPost(c *gin.Context) {
 func (api *DefaultAPI) UpdateProfilePost(c *gin.Context) {
 
 	code, message := updateprofile.UpdateProfile(c)
+
+	c.JSON(code, message)
+}
+
+func (api *DefaultAPI) DeliverProductGet(c *gin.Context) {
+
+	code, message := deliverproduct.DeliverProduct(c)
 
 	c.JSON(code, message)
 }
