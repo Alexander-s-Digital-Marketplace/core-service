@@ -60,7 +60,7 @@ func (cart *Cart) GetAllFromTableByProfileId() (int, []Cart) {
 	defer db.CloseDB()
 
 	var carts []Cart
-	err := db.Connection.Where("profile_id = ?", cart.ProfileId).Preload("Product").Find(&carts).Error
+	err := db.Connection.Where("profile_id = ?", cart.ProfileId).Preload("Product").Preload("Product.Seller").Find(&carts).Error
 	if err != nil {
 		logrus.Errorln("Error get all from table: ", err)
 		return 503, []Cart{}
