@@ -12,6 +12,7 @@ import (
 	switchproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/switch_product"
 	switchproductcart "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/switch_product_cart"
 	updateprofile "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/update_profile"
+	uploadproductimage "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/upload_product_image"
 	"github.com/gin-gonic/gin"
 )
 
@@ -93,4 +94,11 @@ func (api *DefaultAPI) DeliverProductGet(c *gin.Context) {
 	code, message := deliverproduct.DeliverProduct(c)
 
 	c.JSON(code, message)
+}
+
+func (api *DefaultAPI) UploadProductImagePost(c *gin.Context) {
+
+	code, message := uploadproductimage.UploadProductImage(c)
+
+	c.JSON(code, gin.H{"url": message})
 }
