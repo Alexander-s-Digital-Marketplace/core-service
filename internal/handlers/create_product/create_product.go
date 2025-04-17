@@ -5,6 +5,7 @@ import (
 
 	productmodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/product_model"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 func CreateProduct(c *gin.Context) (int, string) {
@@ -24,7 +25,7 @@ func CreateProduct(c *gin.Context) (int, string) {
 	product.SellerId = id.(int)
 	product.IsBuy = false
 	product.IsSellNow = false
-
+	logrus.Infoln("product", product)
 	code = product.AddToTable()
 	if code != 200 {
 		return code, "Error add to table"

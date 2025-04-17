@@ -1,6 +1,8 @@
 package switchproductcart
 
 import (
+	"time"
+
 	cartmodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/cart_model"
 	"github.com/gin-gonic/gin"
 )
@@ -19,6 +21,9 @@ func SwitchProductCart(c *gin.Context) (int, string) {
 	}
 
 	cart.ProfileId = id.(int)
+	cart.Product.Id = cart.ProductId
+	cart.Profile.Id = cart.ProfileId
+	cart.Date = time.Now().Format("2006-01-02 15:04:05")
 
 	code = cart.AddToTable()
 	if code != 200 {

@@ -3,6 +3,7 @@ package switchproduct
 import (
 	productmodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/product_model"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 func SwitchProduct(c *gin.Context) (int, string) {
@@ -16,10 +17,14 @@ func SwitchProduct(c *gin.Context) (int, string) {
 
 	product.DecodeFromContext(c)
 	product.SellerId = id.(int)
-	code = product.Switch(product.IsSellNow)
+
+	logrus.Infoln("product", product)
+	logrus.Infoln("product.IsSellNow", product.IsSellNow)
+	code = product.Switch(!product.IsSellNow)
 	if code != 200 {
 		return code, "Error publish/remove product"
 	}
+	logrus.Infoln("product", product)
 
 	if product.IsSellNow {
 		return 200, "Success publish product"
