@@ -7,13 +7,40 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+
+	"github.com/Alexander-s-Digital-Marketplace/core-service/internal/database"
+	"github.com/sirupsen/logrus"
 )
 
 type Item struct {
 	Id      int    `json:"id" gorm:"primaryKey;autoIncrement"`
 	Content string `json:"content" gorm:"type:varchar(100)"`
+}
 
-	ProductId int `json:"product_id" gorm:"not null"`
+func (item *Item) AddToTable() int {
+	var db database.DataBase
+	db.InitDB()
+	defer db.CloseDB()
+
+	err := db.Connection.Create(&item).Error
+	if err != nil {
+		logrus.Errorln("Error add to table: ", err)
+		return 503
+	}
+	return 200
+}
+
+func (item *Item) GetFromTable() int {
+	var db database.DataBase
+	db.InitDB()
+	defer db.CloseDB()
+
+	err := db.Connection.First(&item).Error
+	if err != nil {
+		logrus.Errorln("Error get from table: ", err)
+		return 503
+	}
+	return 200
 }
 
 // Метод для шифрования Content

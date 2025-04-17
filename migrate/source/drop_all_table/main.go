@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/KusakinDev/Catering-Auth-Service/internal/database"
+	"github.com/Alexander-s-Digital-Marketplace/core-service/internal/database"
 )
 
 func main() {
@@ -11,9 +11,11 @@ func main() {
 	db.InitDB()
 
 	query := []string{
-		`DROP TABLE user_accounts CASCADE;`,
-		`DROP TABLE roles CASCADE;`,
-		`DROP TABLE reset_codes CASCADE;`,
+		`DROP TABLE profiles CASCADE;`,
+		`DROP TABLE products CASCADE;`,
+		`DROP TABLE items CASCADE;`,
+		`DROP TABLE carts CASCADE;`,
+		`DROP TABLE histories CASCADE;`,
 	}
 
 	for _, stmt := range query {
