@@ -1,4 +1,4 @@
-package profileregisterserviceserver
+package coreserviceserver
 
 import (
 	"context"
@@ -6,13 +6,9 @@ import (
 	"net/http"
 
 	profilemodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/profile_model"
-	pb "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/profile_register_service/profile_register_service_gen"
+	pb "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/core_service/core_service_gen"
 	"github.com/sirupsen/logrus"
 )
-
-type Server struct {
-	pb.UnimplementedProfileRegisterServiceServer
-}
 
 func (s *Server) ProfileRegister(ctx context.Context, req *pb.Request) (*pb.Response, error) {
 	var profile profilemodel.Profile

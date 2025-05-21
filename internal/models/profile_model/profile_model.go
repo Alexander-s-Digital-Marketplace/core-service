@@ -55,6 +55,19 @@ func (profile *Profile) GetFromTable() int {
 	return 200
 }
 
+func (profile *Profile) GetFromTableByWalletId() int {
+	var db database.DataBase
+	db.InitDB()
+	defer db.CloseDB()
+
+	err := db.Connection.Where("wallet_id = ?", profile.WalletId).First(&profile).Error
+	if err != nil {
+		logrus.Errorln("Error get from table: ", err)
+		return 503
+	}
+	return 200
+}
+
 func (profile *Profile) UpdateInTable() int {
 	var db database.DataBase
 	db.InitDB()

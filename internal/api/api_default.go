@@ -1,6 +1,7 @@
 package api
 
 import (
+	buyproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/buy_product"
 	createproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/create_product"
 	deliverproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/deliver_product"
 	getallfeed "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_all_feed"
@@ -101,4 +102,11 @@ func (api *DefaultAPI) UploadProductImagePost(c *gin.Context) {
 	code, message := uploadproductimage.UploadProductImage(c)
 
 	c.JSON(code, gin.H{"url": message})
+}
+
+func (api *DefaultAPI) BuyProductPost(c *gin.Context) {
+
+	code, contract := buyproduct.BuyProduct(c)
+
+	c.JSON(code, contract)
 }

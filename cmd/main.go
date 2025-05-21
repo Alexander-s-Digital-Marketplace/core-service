@@ -15,8 +15,8 @@ import (
 
 	loggerconfig "github.com/Alexander-s-Digital-Marketplace/core-service/internal/config/logger"
 	routespkg "github.com/Alexander-s-Digital-Marketplace/core-service/internal/routes"
-	pb "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/profile_register_service/profile_register_service_gen"
-	profileregisterserviceserver "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/profile_register_service/profile_register_service_server"
+	pb "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/core_service/core_service_gen"
+	coreserviceserver "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/core_service/core_service_server"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 )
@@ -39,7 +39,7 @@ func main() {
 
 		grpcServer := grpc.NewServer()
 
-		pb.RegisterProfileRegisterServiceServer(grpcServer, &profileregisterserviceserver.Server{})
+		pb.RegisterCoreServiceServer(grpcServer, &coreserviceserver.Server{})
 
 		logrus.Println("gRPC server is running on port :50052")
 		if err := grpcServer.Serve(listener); err != nil {

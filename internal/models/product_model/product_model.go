@@ -22,6 +22,7 @@ type Product struct {
 	IsBuy       bool    `json:"is_buy" gorm:"type:boolean"`
 	IsSellNow   bool    `json:"is_sell_now" gorm:"type:boolean"`
 	Image       string  `json:"image" gorm:"type:varchar(255)"`
+	OrderId     int     `json:"order_id" gorm:"type:integer"`
 
 	SellerId int `json:"seller_id" gorm:"not null"`
 	ItemId   int `json:"item_id" gorm:"type:bigint"`

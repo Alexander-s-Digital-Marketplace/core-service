@@ -167,5 +167,12 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			"/UploadProductImage",
 			handleFunctions.DefaultAPI.UploadProductImagePost,
 		},
+		{
+			"BuyProductPost",
+			http.MethodPost,
+			"Protected",
+			"/BuyProduct",
+			handleFunctions.DefaultAPI.BuyProductPost,
+		},
 	}
 }
