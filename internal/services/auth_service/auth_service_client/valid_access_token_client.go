@@ -1,10 +1,10 @@
-package validaccesstokenfuncclient
+package authserviceclient
 
 import (
 	"context"
 	"time"
 
-	pb "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/valid_access_token/valid_access_token_gen"
+	pb "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/auth_service/auth_service_gen"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -21,7 +21,7 @@ func ValidAccessToken(accessToken string) (int, int, string) {
 	}
 	defer conn.Close()
 
-	client := pb.NewValidAccessTokenServiceClient(conn)
+	client := pb.NewAuthServiceClient(conn)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()

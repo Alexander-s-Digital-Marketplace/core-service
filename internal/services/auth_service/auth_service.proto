@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "/auth_service";
+
+service AuthService {
+  rpc ValidAccessToken (ValidRequest) returns (ValidResponse);
+  rpc GetEmailByAccountId(EmailRequest) returns (EmailResponse);
+}
+
+message ValidRequest {
+    string accessToken = 1;
+}
+
+message ValidResponse {
+    int32 code = 1;
+    int32 id = 2;
+    string role = 3;
+}
+
+message EmailRequest{
+    int32 id = 1;
+}
+
+message EmailResponse{
+    int32 code = 1;
+    string email = 2;
+}
+
+//protoc --go_out=. --go-grpc_out=. auth_service.proto

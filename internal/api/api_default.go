@@ -1,17 +1,23 @@
 package api
 
 import (
+	addproducttocart "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/add_product_to_cart"
+	buyproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/buy_product"
 	createproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/create_product"
 	deliverproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/deliver_product"
 	getallfeed "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_all_feed"
+	getbalance "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_balance"
 	getcart "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_cart"
 	gethistory "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_history"
 	getmyproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_my_product"
 	getmyprofile "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_my_profile"
 	getprofilebyid "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_profile_by_id"
+	getwallet "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/get_wallet"
+	rateproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/rate_product"
+	removeproductfromcart "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/remove_product_from_cart"
 	switchproduct "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/switch_product"
-	switchproductcart "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/switch_product_cart"
 	updateprofile "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/update_profile"
+	updatewallet "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/update_wallet"
 	uploadproductimage "github.com/Alexander-s-Digital-Marketplace/core-service/internal/handlers/upload_product_image"
 	"github.com/gin-gonic/gin"
 )
@@ -75,9 +81,16 @@ func (api *DefaultAPI) SwitchProductPost(c *gin.Context) {
 	c.JSON(code, message)
 }
 
-func (api *DefaultAPI) SwitchProductCartPost(c *gin.Context) {
+func (api *DefaultAPI) AddProductToCartPost(c *gin.Context) {
 
-	code, message := switchproductcart.SwitchProductCart(c)
+	code, message := addproducttocart.AddProductToCart(c)
+
+	c.JSON(code, message)
+}
+
+func (api *DefaultAPI) RemoveProductFromCartPost(c *gin.Context) {
+
+	code, message := removeproductfromcart.RemoveProductFromCart(c)
 
 	c.JSON(code, message)
 }
@@ -101,4 +114,39 @@ func (api *DefaultAPI) UploadProductImagePost(c *gin.Context) {
 	code, message := uploadproductimage.UploadProductImage(c)
 
 	c.JSON(code, gin.H{"url": message})
+}
+
+func (api *DefaultAPI) BuyProductPost(c *gin.Context) {
+
+	code, contract := buyproduct.BuyProduct(c)
+
+	c.JSON(code, contract)
+}
+
+func (api *DefaultAPI) RateProductPost(c *gin.Context) {
+
+	code, message := rateproduct.RateProduct(c)
+
+	c.JSON(code, message)
+}
+
+func (api *DefaultAPI) GetWalletGet(c *gin.Context) {
+
+	code, wallet := getwallet.GetWallet(c)
+
+	c.JSON(code, wallet)
+}
+
+func (api *DefaultAPI) GetBalanceGet(c *gin.Context) {
+
+	code, wallet := getbalance.GetBalance(c)
+
+	c.JSON(code, wallet)
+}
+
+func (api *DefaultAPI) UpdateWalletPost(c *gin.Context) {
+
+	code, message := updatewallet.UpdateWallet(c)
+
+	c.JSON(code, message)
 }

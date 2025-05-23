@@ -2,6 +2,7 @@ package switchproduct
 
 import (
 	productmodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/product_model"
+	profilemodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/profile_model"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 )
@@ -16,8 +17,16 @@ func SwitchProduct(c *gin.Context) (int, string) {
 	var code int
 
 	product.DecodeFromContext(c)
-	product.SellerId = id.(int)
 
+	profile := profilemodel.Profile{
+		AccountId: int(id.(int)),
+	}
+	code = profile.GetFromTableByAccountId()
+	if code != 200 {
+		return code, ""
+	}
+
+	product.SellerId = profile.Id
 	logrus.Infoln("product", product)
 	logrus.Infoln("product.IsSellNow", product.IsSellNow)
 	code = product.Switch(!product.IsSellNow)
