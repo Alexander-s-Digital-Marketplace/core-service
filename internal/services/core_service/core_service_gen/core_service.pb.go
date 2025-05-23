@@ -189,6 +189,7 @@ type Request struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserName      string                 `protobuf:"bytes,1,opt,name=UserName,proto3" json:"UserName,omitempty"`
 	AccountInfoId int32                  `protobuf:"varint,2,opt,name=AccountInfoId,proto3" json:"AccountInfoId,omitempty"`
+	Wallet        string                 `protobuf:"bytes,3,opt,name=Wallet,proto3" json:"Wallet,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -237,6 +238,13 @@ func (x *Request) GetAccountInfoId() int32 {
 	return 0
 }
 
+func (x *Request) GetWallet() string {
+	if x != nil {
+		return x.Wallet
+	}
+	return ""
+}
+
 var File_core_service_proto protoreflect.FileDescriptor
 
 const file_core_service_proto_rawDesc = "" +
@@ -251,10 +259,11 @@ const file_core_service_proto_rawDesc = "" +
 	"\bwalletId\x18\x03 \x01(\x05R\bwalletId\"8\n" +
 	"\bResponse\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"K\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\"c\n" +
 	"\aRequest\x12\x1a\n" +
 	"\bUserName\x18\x01 \x01(\tR\bUserName\x12$\n" +
-	"\rAccountInfoId\x18\x02 \x01(\x05R\rAccountInfoId2\x95\x01\n" +
+	"\rAccountInfoId\x18\x02 \x01(\x05R\rAccountInfoId\x12\x16\n" +
+	"\x06Wallet\x18\x03 \x01(\tR\x06Wallet2\x95\x01\n" +
 	"\vCoreService\x12T\n" +
 	"\x11UpdateSoldProduct\x12\x1e.core.UpdateSoldProductRequest\x1a\x1f.core.UpdateSoldProductResponse\x120\n" +
 	"\x0fProfileRegister\x12\r.core.Request\x1a\x0e.core.ResponseB\x0fZ\r/core_serviceb\x06proto3"

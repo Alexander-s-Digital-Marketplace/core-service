@@ -7,17 +7,30 @@ import (
 
 	profilemodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/profile_model"
 	pb "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/core_service/core_service_gen"
+	paymentserviceclient "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/payment_service/payment_service_client"
 	"github.com/sirupsen/logrus"
 )
 
 func (s *Server) ProfileRegister(ctx context.Context, req *pb.Request) (*pb.Response, error) {
-	var profile profilemodel.Profile
-	profile.UserName = req.UserName
-	profile.Rating = 0.0
-	profile.CountRating = 0
-	profile.AccountId = int(req.AccountInfoId)
+	code, message, walletId := paymentserviceclient.RegisterWalet(req.Wallet)
+	if code != 200 {
+		logrus.Errorln(message)
+		return &pb.Response{
+			Code:    int32(code),
+			Message: "Error register new wallet",
+		}, errors.New("error register new wallet")
+	}
 
-	code := profile.AddToTable()
+	profile := profilemodel.Profile{
+		UserName:    req.UserName,
+		Rating:      0.0,
+		CountRating: 0,
+		AccountId:   int(req.AccountInfoId),
+		WalletId:    walletId,
+	}
+	logrus.Infoln("walletId from payment", walletId)
+	logrus.Infoln("New profile register", profile)
+	code = profile.AddToTable()
 	if code != 200 {
 		logrus.Errorln("Error register new profile")
 		return &pb.Response{

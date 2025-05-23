@@ -147,11 +147,18 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			handleFunctions.DefaultAPI.SwitchProductPost,
 		},
 		{
-			"SwitchProductCartPost",
+			"RemoveProductFromCartPost",
 			http.MethodPost,
 			"Protected",
-			"/SwitchProductCart",
-			handleFunctions.DefaultAPI.SwitchProductCartPost,
+			"/RemoveProductFromCart",
+			handleFunctions.DefaultAPI.RemoveProductFromCartPost,
+		},
+		{
+			"AddProductToCartPost",
+			http.MethodPost,
+			"Protected",
+			"/AddProductToCart",
+			handleFunctions.DefaultAPI.AddProductToCartPost,
 		},
 		{
 			"UpdateProfilePost",
@@ -173,6 +180,34 @@ func getRoutes(handleFunctions ApiHandleFunctions) []Route {
 			"Protected",
 			"/BuyProduct",
 			handleFunctions.DefaultAPI.BuyProductPost,
+		},
+		{
+			"RateProductPost",
+			http.MethodPost,
+			"Protected",
+			"/RateProduct",
+			handleFunctions.DefaultAPI.RateProductPost,
+		},
+		{
+			"GetWalletGet",
+			http.MethodGet,
+			"Protected",
+			"/GetWallet",
+			handleFunctions.DefaultAPI.GetWalletGet,
+		},
+		{
+			"GetBalanceGet",
+			http.MethodGet,
+			"Protected",
+			"/GetBalance",
+			handleFunctions.DefaultAPI.GetBalanceGet,
+		},
+		{
+			"UpdateWalletPost",
+			http.MethodPost,
+			"Protected",
+			"/UpdateWallet",
+			handleFunctions.DefaultAPI.UpdateWalletPost,
 		},
 	}
 }

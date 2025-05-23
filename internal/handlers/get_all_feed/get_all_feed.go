@@ -8,6 +8,7 @@ import (
 func GetAllFeed(c *gin.Context) (int, []productmodel.Product) {
 	var product productmodel.Product
 	var products []productmodel.Product
+	var productsToFront []productmodel.Product
 	var code int
 
 	code, products = product.GetAllFromTable()
@@ -15,5 +16,11 @@ func GetAllFeed(c *gin.Context) (int, []productmodel.Product) {
 		return code, []productmodel.Product{}
 	}
 
-	return 200, products
+	for _, product := range products {
+		if !product.IsBuy && product.IsSellNow {
+			productsToFront = append(productsToFront, product)
+		}
+	}
+
+	return 200, productsToFront
 }

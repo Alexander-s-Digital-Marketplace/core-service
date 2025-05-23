@@ -27,6 +27,7 @@ message Response {
 message Request {
     string UserName = 1;
     int32 AccountInfoId = 2;
+    string Wallet = 3;
 }
 
 

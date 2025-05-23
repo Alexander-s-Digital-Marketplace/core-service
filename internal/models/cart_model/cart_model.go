@@ -81,6 +81,19 @@ func (cart *Cart) UpdateInTable() int {
 	return 200
 }
 
+func (cart *Cart) DeleteFromTable() int {
+	var db database.DataBase
+	db.InitDB()
+	defer db.CloseDB()
+
+	err := db.Connection.Where("profile_id = ? AND product_id = ?", cart.ProfileId, cart.ProductId).Delete(&cart).Error
+	if err != nil {
+		logrus.Errorln("Error delete from table: ", err)
+		return 503
+	}
+	return 200
+}
+
 func (cart *Cart) MigrateToDB(db database.DataBase) error {
 	err := db.Connection.AutoMigrate(&Cart{})
 	if err != nil {

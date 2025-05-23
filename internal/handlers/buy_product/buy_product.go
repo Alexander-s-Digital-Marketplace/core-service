@@ -20,9 +20,9 @@ func BuyProduct(c *gin.Context) (int, Contract) {
 		return 400, Contract{}
 	}
 	buyer := profilemodel.Profile{
-		Id: int(id.(int)),
+		AccountId: int(id.(int)),
 	}
-	code = buyer.GetFromTable()
+	code = buyer.GetFromTableByAccountId()
 	if code != 200 {
 		return code, Contract{}
 	}

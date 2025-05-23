@@ -12,15 +12,14 @@ func GetMyProfile(c *gin.Context) (int, profilemodel.Profile) {
 		return 400, profilemodel.Profile{}
 	}
 
-	var profile profilemodel.Profile
-	var code int
+	profile := profilemodel.Profile{
+		AccountId: int(id.(int)),
+	}
 
-	profile.Id = id.(int)
-	code = profile.GetFromTable()
+	code := profile.GetFromTableByAccountId()
 	if code != 200 {
 		return code, profilemodel.Profile{}
 	}
-
 	logrus.Infoln("profile", profile)
 
 	return 200, profile

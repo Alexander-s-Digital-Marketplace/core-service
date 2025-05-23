@@ -21,6 +21,7 @@ type Product struct {
 	PubDate     string  `json:"pub_date" gorm:"type:varchar(30)"`
 	IsBuy       bool    `json:"is_buy" gorm:"type:boolean"`
 	IsSellNow   bool    `json:"is_sell_now" gorm:"type:boolean"`
+	IsRated     bool    `json:"is_rated" gorm:"type:boolean"`
 	Image       string  `json:"image" gorm:"type:varchar(255)"`
 	OrderId     int     `json:"order_id" gorm:"type:integer"`
 

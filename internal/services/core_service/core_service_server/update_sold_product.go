@@ -10,6 +10,7 @@ import (
 	productmodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/product_model"
 	profilemodel "github.com/Alexander-s-Digital-Marketplace/core-service/internal/models/profile_model"
 	pb "github.com/Alexander-s-Digital-Marketplace/core-service/internal/services/core_service/core_service_gen"
+	"github.com/sirupsen/logrus"
 )
 
 func (s *Server) UpdateSoldProduct(ctx context.Context, req *pb.UpdateSoldProductRequest) (*pb.UpdateSoldProductResponse, error) {
@@ -28,6 +29,7 @@ func (s *Server) UpdateSoldProduct(ctx context.Context, req *pb.UpdateSoldProduc
 	product.IsBuy = true
 	product.IsSellNow = false
 	code = product.UpdateInTable()
+	logrus.Infoln("product.IsBuy: ", product.IsBuy)
 	if code != 200 {
 		return &pb.UpdateSoldProductResponse{
 			Code:    int32(code),
