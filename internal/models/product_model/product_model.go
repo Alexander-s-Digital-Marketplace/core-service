@@ -159,7 +159,7 @@ func (prod *Product) Seeding(count int, countProf int) error {
 		product.PubDate = gofakeit.Date().Format("2006-01-01 15:00")
 		product.IsBuy = false
 		product.IsSellNow = true
-		product.Image = "image.com"
+		product.Image = "https://res.cloudinary.com/djm1rjwcp/image/upload/v1735085739/product_image/ui9wtvvcnbbc3nefkplk"
 		product.SellerId = r.Intn(countProf) + 1
 		product.ItemId = item.Id
 

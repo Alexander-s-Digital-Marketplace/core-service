@@ -1,4 +1,4 @@
 # ADM-Core-Service
 
-## Deploy
-- $ docker-compose up
+Сервис основной бизнес логики (REST, gRPC)
+
